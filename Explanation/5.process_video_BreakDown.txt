@@ -1,0 +1,296 @@
+# BTS: Convert Videos into MP3 Using FFmpeg
+
+## 1. PURPOSE OF THIS CODE
+
+This code:
+1. Reads filenames from the "Videos" folder.
+2. Extracts the tutorial number from each filename.
+3. Extracts the video title from each filename.
+4. Uses FFmpeg to convert each video into an MP3 audio file.
+5. Saves the audio files inside the "audios" folder.
+
+WHY DO WE NEED THIS?
+
+Whisper works with audio to transcribe speech into text. Extracting audio lets us prepare the audio files for Whisper without processing the video visuals.
+
+NOTE: FFmpeg conversion still takes time and CPU resources. If the original audio files are already available, we can use them directly.
+
+--------------------------------------------------
+
+## 2. UNDERSTANDING THE CODE
+
+### Step 1: Import modules
+
+    import os
+    import subprocess
+
+os:
+- Provides functions to interact with the operating system.
+- Here, we use os.listdir() to read filenames from a folder.
+
+subprocess:
+- Runs external programs and commands from Python.
+- Here, it runs FFmpeg to convert videos into audio.
+
+Both modules are built into Python. No separate pip installation is required.
+
+--------------------------------------------------
+
+### Step 2: Read the filenames
+
+    files = os.listdir("Videos")
+
+WHAT HAPPENS?
+
+- os.listdir("Videos") returns the names of entries inside the Videos folder.
+- files stores those names in a Python list.
+- The list contains filenames, not the actual video contents.
+
+Example:
+
+    files = [
+        "Recipe #1 [Hindi]｜Biryani.mp4",
+        "Recipe #2 [Hindi]｜Pulao.mp4"
+    ]
+
+These are illustrative filenames. Your actual filenames may differ.
+
+--------------------------------------------------
+
+### Step 3: Process each filename
+
+    for file in files:
+
+MEANING:
+
+- for starts a loop.
+- file is a variable that holds one filename at a time.
+- files is the complete list of filenames.
+
+DRY RUN:
+
+First loop:
+    file = "Recipe #1 [Hindi]｜Biryani.mp4"
+
+Second loop:
+    file = "Recipe #2 [Hindi]｜Pulao.mp4"
+
+The code inside the loop runs separately for each entry.
+
+--------------------------------------------------
+
+### Step 4: Extract the tutorial number
+
+    tutorial_number = file.split(" [")[0].split(" #")[1]
+
+This line uses split() twice.
+
+FIRST SPLIT:
+
+    file.split(" [")
+
+- split() divides a string wherever the specified text occurs.
+- " [" means a space followed by an opening square bracket.
+- [0] selects the first part, before that separator.
+
+Example:
+
+    "Recipe #1 [Hindi]｜Biryani.mp4".split(" [")
+
+Result:
+
+    ["Recipe #1", "Hindi]｜Biryani.mp4"]
+
+Selecting [0] gives:
+
+    "Recipe #1"
+
+SECOND SPLIT:
+
+    "Recipe #1".split(" #")
+
+The separator " #" means a space followed by the # symbol.
+
+Result:
+
+    ["Recipe", "1"]
+
+Selecting [1] gives:
+
+    "1"
+
+FINAL RESULT:
+
+    tutorial_number = "1"
+
+IMPORTANT:
+- [0] selects the first item.
+- [1] selects the second item.
+- The result is a string, not an integer.
+- This logic depends on the filename containing the expected separators.
+
+--------------------------------------------------
+
+### Step 5: Extract the filename title
+
+    file_name = file.split("｜")[0]
+
+Here, "｜" is a FULL-WIDTH vertical bar character. It is not the ordinary keyboard character "|".
+
+Example:
+
+    file = "Recipe #1 [Hindi]｜Biryani.mp4"
+
+Splitting at "｜" produces:
+
+    ["Recipe #1 [Hindi]", "Biryani.mp4"]
+
+Selecting [0] gives:
+
+    file_name = "Recipe #1 [Hindi]"
+
+So, this line keeps everything before the full-width vertical bar.
+
+IMPORTANT:
+This is not necessarily the clean recipe title. It depends on how your original filenames are structured.
+
+--------------------------------------------------
+
+### Step 6: Display the extracted values
+
+    print(tutorial_number, file_name)
+
+Suppose:
+
+    tutorial_number = "1"
+    file_name = "Recipe #1 [Hindi]"
+
+Output:
+
+    1 Recipe #1 [Hindi]
+
+This helps us check whether the filename-splitting logic is working correctly.
+
+--------------------------------------------------
+
+### Step 7: Run FFmpeg using subprocess
+
+    subprocess.run([
+        "ffmpeg",
+        "-i", f"Videos/{file}",
+        f"audios/{tutorial_number}_{file_name}.mp3"
+    ])
+
+subprocess.run():
+- Starts the external command and waits for it to finish.
+
+["ffmpeg", ...]:
+- A list of command arguments passed to FFmpeg.
+- Using a list avoids shell interpretation of the filename.
+
+"ffmpeg":
+- The external FFmpeg program that performs the conversion.
+
+"-i":
+- Tells FFmpeg that the next argument is the input file.
+
+f"Videos/{file}":
+- An f-string inserts the value of file into the path.
+- Example: Videos/Recipe #1 [Hindi]｜Biryani.mp4
+
+f"audios/{tutorial_number}_{file_name}.mp3":
+- Creates the output filename using the tutorial number and extracted name.
+- Example: audios/1_Recipe #1 [Hindi].mp3
+
+FFmpeg reads the input video and writes audio to the MP3 output file.
+
+REQUIREMENTS:
+- FFmpeg must be installed and accessible through PATH.
+- The Videos folder must exist.
+- The audios folder must already exist.
+- The filename-splitting logic must match your actual filenames.
+
+--------------------------------------------------
+
+## 3. COMPLETE WORKFLOW
+
+    Videos folder
+         |
+         v
+    os.listdir("Videos")
+         |
+         v
+    Read one filename
+         |
+         v
+    Extract tutorial number
+         |
+         v
+    Extract filename part
+         |
+         v
+    Print the extracted values
+         |
+         v
+    subprocess.run() starts FFmpeg
+         |
+         v
+    Convert video into MP3
+         |
+         v
+    Save MP3 inside audios folder
+         |
+         v
+    Repeat for the next file
+
+--------------------------------------------------
+
+## 4. IMPORTANT CONCEPTS TO REMEMBER
+
+os.listdir():
+Reads the entries inside a folder.
+
+for loop:
+Processes each entry one by one.
+
+split():
+Divides a string at a specified separator.
+
+[0] and [1]:
+Access list items by index. Python indexing starts at zero.
+
+f-string:
+Inserts variable values into a string using {variable}.
+
+subprocess.run():
+Executes an external program and waits for it to finish.
+
+FFmpeg:
+An external program that can convert video and audio formats.
+
+Whisper:
+An AI model used in the next stage to transcribe speech or translate speech into English text.
+
+--------------------------------------------------
+
+## 5. IMPORTANT IMPROVEMENTS
+
+1. Add check=True to subprocess.run() if you want Python to raise an error when FFmpeg fails.
+
+2. Create the audios folder before running the loop if it does not already exist.
+
+3. Check that every entry is a video file. os.listdir() can also return subfolders and unrelated files.
+
+4. The current code uses "/" in paths. This usually works on Windows with Python, but os.path.join() is a more portable way to construct paths.
+
+5. If you already have the original audio files, skip this conversion stage and prepare those files directly for Whisper.
+
+--------------------------------------------------
+
+FINAL SUMMARY:
+
+os reads the filenames.
+split() extracts the required parts of each filename.
+subprocess runs FFmpeg.
+FFmpeg converts each video into an MP3 file.
+Whisper will use the prepared audio in the next stage.

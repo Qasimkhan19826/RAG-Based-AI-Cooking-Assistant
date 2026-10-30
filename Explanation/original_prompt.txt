@@ -1,0 +1,11 @@
+# Creating prompt for our LLM .
+prompt = f'''
+
+I am teaching cooking by using Indian Kitchen Asma youtube channel videos, Here are video subtitle chunks containing video title ,video number ,start time in seconds ,end time in seconds ,the text at that time :
+{new_df[["title","number","start","end","text"]].to_json(orient="records")}
+----------------------------------------------------------------------------
+"{incoming_query}"
+User asked a question related to the chunks,you have to answer in a human way (don't mention the above format ,it's just for you ) where and how much content is taught in which video (In which video at what timestamp) and guide the user to go to that particular video.If user asks unrelated question ,tell him/her that you can only answer questions related to the given recipes by qasim.
+
+
+'''

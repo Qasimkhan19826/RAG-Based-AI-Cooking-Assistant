@@ -1,0 +1,87 @@
+Step 1 : Find or Collect the Data for your RAG .(Videos or audio)
+
+Step 2 : Videos to audio (By using ffmpeg ).Skip this step if you have audios
+
+Step 3 : Video to text (By using openai Whisper) 
+
+Step 4 : Chunking (Breaking text into Several parts)
+
+E.g : After Chunking our text seems like this:
+{timestamp:00:23:23,duration:34,text:"The cat is very good ",course:"Sigma web dev"}
+
+Step 5 : Text to vectors (Embeddings By using openai embedding model)
+
+What is Cosine Similarity in Embeddings?
+Cosine similarity is a mathematical method used to measure how similar two vectors are by comparing the angle between them.
+
+In your Indian Kitchen Asma RAG project, it helps your system find recipe transcripts that are most relevant to the user's question.
+
+Let's understand it step by step.
+1. First, what is an embedding?
+An embedding is a list of numbers that represents the meaning of text.
+
+For example, imagine your embedding model converts these sentences into vectors:
+Text	Example embedding
+“How to make biryani?”	[1, 2]
+“Biryani cooking steps”	[2, 4]
+“How to repair a laptop?”	[-2, 1]
+These are simplified, made-up vectors for learning. Real embedding models usually generate vectors containing hundreds or thousands of numbers.
+
+Texts with similar meanings often have embeddings pointing in similar directions.
+2. What does cosine similarity do?
+Imagine your system receives this question:
+
+“How do I make biryani?”
+
+Your database contains two transcript chunks:
+- Chunk A: “Steps for preparing biryani with rice and spices.”
+- Chunk B: “How to repair a laptop keyboard.”
+
+The embedding model converts the question and both chunks into vectors. Cosine similarity compares their directions to estimate which chunk is more semantically similar to the question.
+
+
+COSINE SIMILARITY IN EMBEDDINGS
+================================
+
+       User Question
+             |
+             v
+      Create Embedding
+             |
+             v
+     Compare with Stored
+         Embeddings
+             |
+             v
+     Calculate Similarity
+             |
+       +-----+-----+
+       |           |
+       v           v
+  High Score    Low Score
+       |           |
+       v           v
+ Similar Text   Less Relevant
+       |
+       v
+ Retrieve Relevant Text
+       |
+       v
+   Generate AI Answer
+
+
+Example:
+Question: "How to make biryani?"
+Stored text: "Biryani cooking steps"
+Cosine similarity: High
+
+Meaning:
+Cosine similarity compares the direction of two
+embedding vectors to measure their similarity.
+Higher similarity generally means more similar meaning.
+
+Step 6 : Query to vectors. (Converting users text into embeddings for retrieval (Augmented))
+
+Step 7 : RAG Setup (Retrieval).
+
+Step 8 : Get Response from LLM (Generation) .

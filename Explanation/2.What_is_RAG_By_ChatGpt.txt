@@ -1,0 +1,107 @@
+In this project, we’ll build a RAG-based AI Teaching Assistant designed
+for our Data Science course. Using Retrieval-Augmented Generation (RAG),
+the assistant will be able to fetch relevant information from course 
+materials and provide accurate, context-aware answers—just like a real 
+teaching assistant.
+
+What is RAG ?
+>What is RAG? (Retrieval-Augmented Generation)
+RAG stands for Retrieval-Augmented Generation. It is an AI technique that allows an AI model to search your own data, retrieve relevant information, and use that information to generate an answer.
+
+Let's understand each letter of RAG in simple English.
+R — Retrieval
+Meaning: Finding information
+
+Retrieval means searching your available data to find information relevant to the user's question.
+
+For example, a user asks:
+
+“How do I make biryani?”
+
+Your AI cooking assistant searches the transcripts of your mother's Indian Kitchen Asma videos and finds the parts that explain the biryani recipe.
+A — Augmented
+Meaning: Improving or adding context
+
+The AI receives the relevant information retrieved from your data along with the user's question. This additional context helps it produce a more relevant answer.
+
+For example, the system provides the AI with:
+
+- User's question: “How do I make biryani?”
+- Retrieved context: The relevant English transcript from your mother's Hindi cooking video.
+
+Now, the AI can use the actual recipe information instead of relying only on its general knowledge.
+G — Generation
+Meaning: Creating an answer
+
+The AI uses the question and retrieved information to generate a natural-language response that the user can understand.
+
+
+How RAG works in your Indian Kitchen Asma project
+
+1. User asks a question
+
+“How do I make biryani?”
+
+2. Retrieval
+
+Search recipe transcript chunks using embeddings and FAISS.
+
+3. Augmentation
+
+Combine the user's question with the relevant retrieved recipe text.
+
+4. Generation
+
+The LLM generates an answer grounded in the retrieved information.
+
+5. Display the answer
+
+Show the answer and a link to the source cooking video.
+
+
+Where do Whisper, FAISS and the LLM fit?
+Technology	Purpose
+
+Whisper	Converts Hindi speech into English text during preprocessing.
+
+Embedding model	Converts text into numerical vectors for similarity search.
+
+FAISS	Finds transcript chunks relevant to the user's question.
+
+LLM (AI model)	Generates the final answer using the retrieved context.
+Flask	Connects the frontend, retrieval system and AI model.
+
+React	Displays the chat interface to the user.
+
+MongoDB or MySQL	Stores user accounts and chat history.
+
+Important: Whisper is used mainly before the user starts asking questions, to prepare your recipe knowledge base. RAG then uses those prepared transcripts to answer questions.
+
+Why use RAG instead of asking ChatGPT directly?
+- Ordinary AI: Answers mainly from its learned knowledge and the context provided in the conversation.
+
+- RAG-based AI: Searches your specific documents or data first, then uses the relevant information to answer.
+
+This makes RAG useful for your cooking assistant because it can answer questions using your mother's recipes and link back to her videos.
+
+Easy way to remember RAG:
+- R — Retrieve: Find the relevant information.
+- A — Augment: Add that information to the question as context.
+- G — Generate: Create an answer using that context.
+In one sentence: RAG = Search your data + Give the AI relevant context + Generate an answer.
+
+
+
+
+
+
+
+
+
+
+
+For example, it might answer:
+
+“First, heat the oil and add the spices. Then add the ingredients mentioned in the recipe and follow the cooking steps from the video.”
+
+The exact ingredients, quantities, and cooking times should come from the actual transcript. The AI should not invent missing details.  

@@ -1,0 +1,93 @@
+# From here our tough part comes .
+
+# Challenge 1:
+
+# You Know we are using openai Whisper which is opensource 
+# free to use ,but it drawbacks are :
+# 1.Takes a lot of runtime of your PC .
+# 2.It takes a lot of time for model loading .
+# 3.It takes a lot of time for transcribe the audio (E.g :)
+# 4.You can't use Whisper in a normal PC .
+
+# Solutions :
+# 1 .If you have a good PC or Laptop than use opensource Whisper .
+# (Note: But still it will takes a lot of time to transcribe the video)
+
+# 2.By using API of openai .
+# (Note:You have to pay in order to use OpenAI Whisper API Key in your program).
+
+# 3.Buy a Runtime (Recommended when you are buying openai key instead rent the runtime for your project)
+# Reason :OpenAI does not take only the compute charge ,
+# It takes charges for the compute + their technologies,some embeddings are created in openAI it takes
+# Charges for it ,there a lot of models of openAI ,which is not opensouce it also takes charges for this,
+
+
+
+# 4.Use Google colab for heavy process.
+# (We will use this option for our project )
+
+# Reason To use google colab ?
+
+# Challenge 1: Why Are We Using Google Colab for Whisper?
+
+## 1. Drawbacks of OpenAI Whisper
+
+# OpenAI Whisper is an open-source speech recognition model. It can transcribe audio into text and translate speech into English.
+
+# However, it has some limitations:
+
+# 1. **High resource usage:** Larger Whisper models require more RAM and computing power.
+# 2. **Model loading time:** Loading a model can take time, especially on a low-powered computer.
+# 3. **Slow transcription:** Processing audio can take considerable time, particularly when using larger models on a CPU.
+# 4. **Hardware limitations:** Computers with limited RAM or without a suitable GPU may struggle with larger models or run them slowly.
+
+# **Important:** Whisper can run on a normal PC. Its speed and performance depend on the model size and available hardware.
+
+## 2. Possible Solutions
+
+### Option 1: Run Whisper on a local PC
+
+# Use Whisper directly on your computer.
+
+# - No API fee is required for the open-source model.
+# - You need to install the necessary software and download the model.
+# - Performance depends on your computer's hardware.
+
+# ### Option 2: Use a hosted speech-to-text API
+
+# Use a cloud API to process audio on remote servers.
+
+# - It reduces the need to run the model on your own computer.
+# - It can simplify integration into an application.
+# - Paid APIs may charge based on audio duration or usage.
+
+# ### Option 3: Use Google Colab
+
+# For our project, we will use Google Colab to process the cooking audio files.
+
+# - It provides a cloud-based Python notebook environment.
+# - It can provide access to GPUs, depending on availability and usage limits.
+# - Heavy audio processing happens on the cloud runtime rather than relying entirely on our laptop.
+# - We can save the translated transcripts to Google Drive for later use.
+
+# ## 3. Why Are We Choosing Google Colab?
+
+# Our laptop has limited RAM, and processing multiple cooking videos with Whisper could take a long time.
+
+# Therefore, we will use Google Colab for the **audio-to-text preprocessing stage**. We will translate the Hindi cooking speech into English text and save the transcripts.
+
+# Later, our RAG system will use these saved transcripts to answer users' cooking questions. We will not need to run Whisper every time a user asks a question.
+
+# ## 4. Important Limitations
+
+# - Free Colab does not guarantee GPU availability or unlimited runtime.
+# - A GPU can speed up processing, but the actual speed depends on the hardware and model.
+# - Model loading still takes time in Colab.
+# - We must save our output files to Google Drive because temporary runtime files can disappear when the runtime resets.
+
+# ## Final Decision
+
+# We will use Google Colab to process our existing cooking audio files with Whisper, translate the Hindi speech into English, and save the transcripts. These transcripts will become the knowledge source for our RAG-based cooking assistant.
+
+# 5. **Long Processing Time on Normal PCs:** When using the Whisper `large` model on a normal laptop (Intel i5, 8 GB RAM), loading the model may take approximately 1–3 minutes, and transcribing 10 minutes of audio may take around 25–60+ minutes. Actual timings depend on the hardware and system configuration.
+

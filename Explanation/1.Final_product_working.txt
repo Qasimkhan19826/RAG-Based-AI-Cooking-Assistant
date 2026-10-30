@@ -1,0 +1,101 @@
+
+## How Users Will Use My Project
+
+### Project: Indian Kitchen Asma
+RAG-Based AI Cooking Assistant
+
+### Step 1: Open the Website
+The user opens my website and logs in
+or creates an account.
+
+### Step 2: Ask a Cooking Question
+The user types a question in English.
+
+Example:
+"How do I make potato paratha?"
+
+### Step 3: Search the Knowledge Base
+The system searches cooking transcripts
+created from my mother's Hindi videos.
+
+FAISS finds the most relevant text chunks.
+
+### Step 4: Generate the Answer
+The retrieved text is sent to an AI model.
+
+The AI generates an English answer
+based on the relevant cooking information.
+
+### Step 5: Show the Answer
+The website displays the answer to the user.
+
+It also provides the relevant source video link
+when that information is available.
+
+### Step 6: Watch the Original Video
+The user can open the source video
+to see the cooking process.
+
+### Step 7: Continue the Conversation
+The user can ask follow-up questions.
+
+Example:
+"Can I use less oil?"
+
+The system searches for relevant information
+and generates another answer.
+
+### How the System Works Internally
+
+User's Question
+       ↓
+React Frontend
+       ↓
+Python Flask Backend
+       ↓
+Convert Question into an Embedding
+       ↓
+FAISS Searches Relevant Text Chunks
+       ↓
+Retrieved Context + User's Question
+       ↓
+AI Language Model Generates an Answer
+       ↓
+Answer + Source Link
+       ↓
+Displayed on the Website
+
+### Technologies Used
+
+- React: User interface and chat screen.
+- Flask: Backend and API.
+- Whisper: Hindi speech transcription
+  and translation into English.
+- Embeddings: Convert text into vectors.
+- FAISS: Find relevant transcript chunks.
+- AI Language Model: Generate answers.
+- MySQL: Store user accounts and
+  optional chat history.
+
+### Important Point
+
+Whisper processes the videos before
+users ask questions.
+
+The website does not need to transcribe
+the same videos for every question.
+
+FAISS retrieves relevant information
+from the prepared knowledge base.
+
+The AI should answer using the retrieved
+cooking information and avoid inventing
+ingredients, quantities or cooking times.
+
+### Final Goal
+
+Build a cooking assistant where users can
+ask questions in English about recipes
+from Indian Kitchen Asma's videos,
+receive helpful answers and open
+the original videos for guidance.
